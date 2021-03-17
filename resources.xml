@@ -1,0 +1,3 @@
+<project>
+<node name="my-node" hostname="slave" osArch="amd64" osFamily="unix" osName="Linux" osVersion="3.11.10-03111015-generic" username="rundeck"/>
+</project>

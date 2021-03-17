@@ -1,0 +1,20 @@
+FROM python:3.7-slim
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN adduser rundeck  --disabled-password  && \
+mkdir -p /home/rundeck/.ssh  && \
+chown rundeck:rundeck /home/rundeck/  && \
+echo "rundeck ALL=(ALL)  NOPASSWD: ALL" >> /etc/sudoers
+
+# Replace the "ssh-rsa ...." with your id_rsa.pub
+COPY id_rsa.pub /home/rundeck/.ssh/authorized_keys
+
+RUN apt-get update &&\
+  apt-get install -qy openssh-server ssh curl && \
+  systemctl enable ssh &&\
+  service ssh start
+
+EXPOSE 22
+
+ENTRYPOINT service ssh start && sleep infinity
